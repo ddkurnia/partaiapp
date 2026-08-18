@@ -1,0 +1,146 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default: deny all
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function getRole() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role;
+    }
+
+    function hasMinRole(level) {
+      return isAuthenticated() && getRole().level >= level;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isDistrictAdmin(districtId) {
+      return isAuthenticated() &&
+        (getRole() == 'super_admin' ||
+         getRole() == 'admin_kabupaten' ||
+         (getRole() == 'admin_kecamatan' &&
+          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.districtId == districtId));
+    }
+
+    function isVillageAdmin(districtId, villageId) {
+      return isDistrictAdmin(districtId) &&
+        (getRole() == 'super_admin' ||
+         getRole() == 'admin_kabupaten' ||
+         getRole() == 'admin_kecamatan' ||
+         (getRole() == 'admin_desa' &&
+          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.villageId == villageId));
+    }
+
+    // Users - only super_admin can create/manage users
+    match /users/{userId} {
+      allow read: if isAuthenticated() && (request.auth.uid == userId || getRole() == 'super_admin');
+      allow create: if false; // Only via Firebase Admin SDK
+      allow update: if isAuthenticated() && (request.auth.uid == userId || getRole() == 'super_admin');
+      allow delete: if getRole() == 'super_admin';
+    }
+
+    // Members
+    match /members/{memberId} {
+      allow read: if isAuthenticated() && (
+        getRole() == 'super_admin' ||
+        getRole() == 'admin_kabupaten' ||
+        getRole() == 'admin_kecamatan' ||
+        getRole() == 'admin_desa' ||
+        getRole() == 'kader' ||
+        getRole() == 'viewer'
+      );
+      allow create: if isAuthenticated() && (
+        getRole() == 'super_admin' ||
+        getRole() == 'admin_kabupaten' ||
+        getRole() == 'admin_kecamatan' ||
+        getRole() == 'admin_desa' ||
+        getRole() == 'kader'
+      );
+      allow update: if isAuthenticated() && (
+        getRole() == 'super_admin' ||
+        getRole() == 'admin_kabupaten' ||
+        getRole() == 'admin_kecamatan' ||
+        getRole() == 'admin_desa'
+      );
+      allow delete: if getRole() == 'super_admin' || getRole() == 'admin_kabupaten';
+    }
+
+    // Activity logs
+    match /activity_logs/{logId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated();
+      allow update, delete: if false;
+    }
+
+    // Audit logs - read only for admins
+    match /audit_logs/{logId} {
+      allow read: if isAuthenticated() && (
+        getRole() == 'super_admin' || getRole() == 'admin_kabupaten'
+      );
+      allow create: if isAuthenticated();
+      allow update, delete: if false;
+    }
+
+    // Notifications
+    match /notifications/{notifId} {
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow delete: if false;
+    }
+
+    // Regions - read for all authenticated, write for admins
+    match /regions/{regionId} {
+      allow read: if isAuthenticated();
+      allow create: if getRole() == 'super_admin';
+      allow update: if getRole() == 'super_admin' || getRole() == 'admin_kabupaten';
+      allow delete: if getRole() == 'super_admin';
+    }
+
+    // Quiz
+    match /quizzes/{quizId} {
+      allow read: if isAuthenticated();
+      allow create: if getRole() == 'super_admin' || getRole() == 'admin_kabupaten';
+      allow update: if getRole() == 'super_admin' || getRole() == 'admin_kabupaten';
+      allow delete: if getRole() == 'super_admin';
+    }
+
+    // Quiz results
+    match /quiz_results/{resultId} {
+      allow read: if isAuthenticated() && (
+        resource.data.userId == request.auth.uid ||
+        getRole() == 'super_admin' || getRole() == 'admin_kabupaten'
+      );
+      allow create: if isAuthenticated();
+      allow update, delete: if false;
+    }
+
+    // Rewards
+    match /rewards/{rewardId} {
+      allow read: if isAuthenticated();
+      allow create: if getRole() == 'super_admin' || getRole() == 'admin_kabupaten';
+      allow update: if getRole() == 'super_admin' || getRole() == 'admin_kabupaten';
+      allow delete: if getRole() == 'super_admin';
+    }
+
+    // Reward redemptions
+    match /reward_redemptions/{redemptionId} {
+      allow read: if isAuthenticated() && (
+        resource.data.userId == request.auth.uid ||
+        getRole() == 'super_admin' || getRole() == 'admin_kabupaten'
+      );
+      allow create: if isAuthenticated();
+      allow update: if getRole() == 'super_admin' || getRole() == 'admin_kabupaten';
+      allow delete: if false;
+    }
+
+    // Default deny everything else
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

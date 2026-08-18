@@ -1,0 +1,107 @@
+export type UserRole =
+  | 'super_admin'
+  | 'admin_kabupaten'
+  | 'admin_kecamatan'
+  | 'admin_desa'
+  | 'kader'
+  | 'viewer';
+
+export interface User {
+  uid: string;
+  email: string;
+  displayName: string;
+  photoURL?: string;
+  role: UserRole;
+  districtId?: string;
+  villageId?: string;
+  createdAt: number;
+  updatedAt: number;
+}
+
+export interface UserProfile extends User {
+  phone?: string;
+  xp?: number;
+  level?: number;
+  badges?: string[];
+}
+
+export interface Member {
+  memberId: string;
+  name: string;
+  nikHash: string;
+  nikMasked: string;
+  birthPlace: string;
+  birthDate: string;
+  gender: 'L' | 'P';
+  address: string;
+  phone: string;
+  districtId: string;
+  villageId: string;
+  photoUrl?: string;
+  documentUrl?: string;
+  status: 'active' | 'inactive' | 'suspended';
+  verificationStatus: 'pending' | 'verified' | 'rejected';
+  registeredBy: string;
+  createdAt: number;
+  updatedAt: number;
+}
+
+export interface Region {
+  provinceId: string;
+  provinceName: string;
+  districts: District[];
+}
+
+export interface District {
+  districtId: string;
+  districtName: string;
+ villages: Village[];
+}
+
+export interface Village {
+  villageId: string;
+  villageName: string;
+}
+
+export interface ActivityLog {
+  activityId: string;
+  userId: string;
+  userName: string;
+  action: string;
+  targetType: string;
+  targetId?: string;
+  districtId?: string;
+  villageId?: string;
+  timestamp: number;
+  metadata?: Record<string, unknown>;
+}
+
+export interface Notification {
+  notificationId: string;
+  userId: string;
+  title: string;
+  body: string;
+  type: 'info' | 'warning' | 'success' | 'reward' | 'level_up';
+  read: boolean;
+  createdAt: number;
+  metadata?: Record<string, unknown>;
+}
+
+export interface DashboardStats {
+  totalMembers: number;
+  activeCadres: number;
+  newMembersThisMonth: number;
+  verifiedData: number;
+  pendingVerification: number;
+  todayActivities: number;
+}
+
+export interface PaginatedResult<T> {
+  data: T[];
+  total: number;
+  page: number;
+  pageSize: number;
+  hasNextPage: boolean;
+}
+
+export type FetchStatus = 'idle' | 'loading' | 'success' | 'error';
