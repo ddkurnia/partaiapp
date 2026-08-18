@@ -15,6 +15,7 @@ import CadresPage from '@/pages/cadres/CadresPage';
 import ActivitiesPage from '@/pages/activities/ActivitiesPage';
 import AuditPage from '@/pages/audit/AuditPage';
 import StatisticsPage from '@/pages/statistics/StatisticsPage';
+import MapPage from '@/pages/map/MapPage';
 
 export default function App() {
   return (
@@ -57,7 +58,7 @@ export default function App() {
             <Route path="members/:id/edit" element={<MemberEditPage />} />
             <Route path="cadres" element={<CadresPage />} />
             <Route path="regions" element={<RegionsPage />} />
-            <Route path="map" element={<PlaceholderPage title="Peta Wilayah" />} />
+            <Route path="map" element={<MapPage />} />
             <Route path="statistics" element={<StatisticsPage />} />
             <Route path="activities" element={<ActivitiesPage />} />
             <Route path="verification" element={<PlaceholderPage title="Verifikasi" />} />
