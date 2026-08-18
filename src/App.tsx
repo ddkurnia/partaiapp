@@ -6,6 +6,11 @@ import { DashboardLayout } from '@/layouts/DashboardLayout';
 import LoginPage from '@/pages/auth/LoginPage';
 import ForgotPasswordPage from '@/pages/auth/ForgotPasswordPage';
 import DashboardPage from '@/pages/dashboard/DashboardPage';
+import MemberListPage from '@/pages/members/MemberListPage';
+import MemberFormPage from '@/pages/members/MemberFormPage';
+import MemberDetailPage from '@/pages/members/MemberDetailPage';
+import MemberEditPage from '@/pages/members/MemberEditPage';
+import RegionsPage from '@/pages/regions/RegionsPage';
 
 export default function App() {
   return (
@@ -42,10 +47,12 @@ export default function App() {
             <Route path="dashboard" element={<DashboardPage />} />
 
             {/* Placeholder routes for future milestones */}
-            <Route path="members" element={<PlaceholderPage title="Anggota" />} />
-            <Route path="members/new" element={<PlaceholderPage title="Tambah Anggota" />} />
+            <Route path="members" element={<MemberListPage />} />
+            <Route path="members/new" element={<MemberFormPage />} />
+            <Route path="members/:id" element={<MemberDetailPage />} />
+            <Route path="members/:id/edit" element={<MemberEditPage />} />
             <Route path="cadres" element={<PlaceholderPage title="Kader" />} />
-            <Route path="regions" element={<PlaceholderPage title="Wilayah" />} />
+            <Route path="regions" element={<RegionsPage />} />
             <Route path="map" element={<PlaceholderPage title="Peta Wilayah" />} />
             <Route path="statistics" element={<PlaceholderPage title="Statistik" />} />
             <Route path="activities" element={<PlaceholderPage title="Aktivitas" />} />
