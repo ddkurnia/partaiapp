@@ -11,6 +11,10 @@ import MemberFormPage from '@/pages/members/MemberFormPage';
 import MemberDetailPage from '@/pages/members/MemberDetailPage';
 import MemberEditPage from '@/pages/members/MemberEditPage';
 import RegionsPage from '@/pages/regions/RegionsPage';
+import CadresPage from '@/pages/cadres/CadresPage';
+import ActivitiesPage from '@/pages/activities/ActivitiesPage';
+import AuditPage from '@/pages/audit/AuditPage';
+import StatisticsPage from '@/pages/statistics/StatisticsPage';
 
 export default function App() {
   return (
@@ -51,17 +55,17 @@ export default function App() {
             <Route path="members/new" element={<MemberFormPage />} />
             <Route path="members/:id" element={<MemberDetailPage />} />
             <Route path="members/:id/edit" element={<MemberEditPage />} />
-            <Route path="cadres" element={<PlaceholderPage title="Kader" />} />
+            <Route path="cadres" element={<CadresPage />} />
             <Route path="regions" element={<RegionsPage />} />
             <Route path="map" element={<PlaceholderPage title="Peta Wilayah" />} />
-            <Route path="statistics" element={<PlaceholderPage title="Statistik" />} />
-            <Route path="activities" element={<PlaceholderPage title="Aktivitas" />} />
+            <Route path="statistics" element={<StatisticsPage />} />
+            <Route path="activities" element={<ActivitiesPage />} />
             <Route path="verification" element={<PlaceholderPage title="Verifikasi" />} />
             <Route path="quiz" element={<PlaceholderPage title="Quiz" />} />
             <Route path="leaderboard" element={<PlaceholderPage title="Leaderboard" />} />
             <Route path="rewards" element={<PlaceholderPage title="Reward" />} />
             <Route path="notifications" element={<PlaceholderPage title="Notifikasi" />} />
-            <Route path="audit" element={<PlaceholderPage title="Audit Log" />} />
+            <Route path="audit" element={<AuditPage />} />
             <Route path="settings" element={<PlaceholderPage title="Pengaturan" />} />
             <Route path="kader" element={<PlaceholderPage title="Beranda Kader" />} />
           </Route>
