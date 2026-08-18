@@ -119,6 +119,27 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
+    // Kader targets
+    match /kader_targets/{targetId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && (
+        getRole() == 'super_admin' || getRole() == 'admin_kabupaten' || getRole() == 'admin_kecamatan'
+      );
+      allow update: if isAuthenticated() && (
+        getRole() == 'super_admin' || getRole() == 'admin_kabupaten'
+      );
+      allow delete: if getRole() == 'super_admin' || getRole() == 'admin_kabupaten';
+    }
+
+    // Training records
+    match /training_records/{recordId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && (
+        getRole() == 'super_admin' || getRole() == 'admin_kabupaten'
+      );
+      allow update, delete: if false;
+    }
+
     // Rewards
     match /rewards/{rewardId} {
       allow read: if isAuthenticated();

@@ -71,7 +71,21 @@ export interface ActivityLog {
   targetType: string;
   targetId?: string;
   districtId?: string;
+  districtName?: string;
   villageId?: string;
+  villageName?: string;
+  timestamp: number;
+  metadata?: Record<string, unknown>;
+}
+
+export interface AuditLog {
+  auditId: string;
+  userId: string;
+  userName?: string;
+  action: string;
+  targetType: string;
+  targetId?: string;
+  districtId?: string;
   timestamp: number;
   metadata?: Record<string, unknown>;
 }
@@ -105,3 +119,35 @@ export interface PaginatedResult<T> {
 }
 
 export type FetchStatus = 'idle' | 'loading' | 'success' | 'error';
+
+export interface KaderTarget {
+  targetId: string;
+  userId: string;
+  period: string; // e.g. '2025-01'
+  targetMembers: number;
+  achievedMembers: number;
+  targetVerified: number;
+  achievedVerified: number;
+  createdAt: number;
+  updatedAt: number;
+}
+
+export interface TrainingRecord {
+  trainingId: string;
+  title: string;
+  type: 'online' | 'offline' | 'quiz';
+  score?: number;
+  maxScore?: number;
+  xpEarned: number;
+  completedAt: number;
+}
+
+export interface KaderProfile extends UserProfile {
+  districtName?: string;
+  villageName?: string;
+  level: number;
+  memberCount: number;
+  verifiedCount: number;
+  targets?: KaderTarget[];
+  trainingHistory?: TrainingRecord[];
+}

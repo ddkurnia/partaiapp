@@ -12,6 +12,7 @@ import MemberDetailPage from '@/pages/members/MemberDetailPage';
 import MemberEditPage from '@/pages/members/MemberEditPage';
 import RegionsPage from '@/pages/regions/RegionsPage';
 import CadresPage from '@/pages/cadres/CadresPage';
+import KaderDetailPage from '@/pages/cadres/KaderDetailPage';
 import ActivitiesPage from '@/pages/activities/ActivitiesPage';
 import AuditPage from '@/pages/audit/AuditPage';
 import StatisticsPage from '@/pages/statistics/StatisticsPage';
@@ -57,6 +58,7 @@ export default function App() {
             <Route path="members/:id" element={<MemberDetailPage />} />
             <Route path="members/:id/edit" element={<MemberEditPage />} />
             <Route path="cadres" element={<CadresPage />} />
+            <Route path="cadres/:id" element={<KaderDetailPage />} />
             <Route path="regions" element={<RegionsPage />} />
             <Route path="map" element={<MapPage />} />
             <Route path="statistics" element={<StatisticsPage />} />
