@@ -17,6 +17,7 @@ import ActivitiesPage from '@/pages/activities/ActivitiesPage';
 import AuditPage from '@/pages/audit/AuditPage';
 import StatisticsPage from '@/pages/statistics/StatisticsPage';
 import MapPage from '@/pages/map/MapPage';
+import ScanPage from '@/pages/verification/ScanPage';
 
 export default function App() {
   return (
@@ -63,7 +64,7 @@ export default function App() {
             <Route path="map" element={<MapPage />} />
             <Route path="statistics" element={<StatisticsPage />} />
             <Route path="activities" element={<ActivitiesPage />} />
-            <Route path="verification" element={<PlaceholderPage title="Verifikasi" />} />
+            <Route path="verification" element={<ScanPage />} />
             <Route path="quiz" element={<PlaceholderPage title="Quiz" />} />
             <Route path="leaderboard" element={<PlaceholderPage title="Leaderboard" />} />
             <Route path="rewards" element={<PlaceholderPage title="Reward" />} />

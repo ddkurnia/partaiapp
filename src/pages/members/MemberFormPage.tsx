@@ -1,10 +1,10 @@
-import { useState, type FormEvent } from 'react';
+import { useState, useEffect, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { createMember, checkDuplicate, type DuplicateCheck } from '@/services/members/memberService';
 import { getDistrictOptions, getVillageOptions } from '@/constants/regions';
 import type { Member } from '@/types';
-import { Save, ArrowLeft, AlertTriangle, Loader2 } from 'lucide-react';
+import { Save, ArrowLeft, AlertTriangle, Loader2, FileText } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 interface FormData {
@@ -33,6 +33,28 @@ export default function MemberFormPage() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState<FormData>(INITIAL);
+  const [ocrSource, setOcrSource] = useState(false);
+
+  // Auto-fill from OCR scan data stored in sessionStorage
+  useEffect(() => {
+    try {
+      const ocrData = sessionStorage.getItem('ocr_member_data');
+      if (ocrData) {
+        const data = JSON.parse(ocrData);
+        if (Object.keys(data).length > 0) {
+          setForm(prev => ({
+            ...prev,
+            ...data,
+            // Ensure gender is valid
+            gender: (data.gender === 'L' || data.gender === 'P') ? data.gender : prev.gender,
+          }));
+          setOcrSource(true);
+          toast.success('Data dari scan KTP berhasil dimuat', { icon: '📋' });
+        }
+        sessionStorage.removeItem('ocr_member_data');
+      }
+    } catch { /* ignore parse errors */ }
+  }, []);
   const [errors, setErrors] = useState<FormErrors>({});
   const [saving, setSaving] = useState(false);
   const [duplicate, setDuplicate] = useState<DuplicateCheck | null>(null);
@@ -138,6 +160,13 @@ export default function MemberFormPage() {
           <h2 className="text-xl font-bold text-primary">Tambah Anggota</h2>
           <p className="text-sm text-muted-foreground">Isi data anggota baru</p>
         </div>
+        <button
+          type="button"
+          onClick={() => navigate('/verification?redirect=/members/new')}
+          className="btn-outline h-10 px-3 text-sm flex items-center gap-1.5 flex-shrink-0"
+        >
+          <FileText className="w-4 h-4" /> Scan KTP
+        </button>
       </div>
 
       {/* Duplicate Warning */}
@@ -165,6 +194,17 @@ export default function MemberFormPage() {
                 </button>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* OCR Source Banner */}
+      {ocrSource && (
+        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-3 flex items-center gap-3">
+          <FileText className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+          <div className="flex-1 min-w-0">
+            <p className="text-xs font-medium text-blue-700 dark:text-blue-300">Data diisi otomatis dari scan KTP</p>
+            <p className="text-[10px] text-blue-600/70 dark:text-blue-400/70">Periksa dan lengkapi data yang belum terisi sebelum menyimpan</p>
           </div>
         </div>
       )}

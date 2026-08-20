@@ -12,6 +12,7 @@ import {
   HelpCircle,
   Gift,
   ClipboardCheck,
+  ScanLine,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -46,6 +47,7 @@ export const MORE_NAV: NavItem[] = [
 export const KADER_NAV: NavItem[] = [
   { label: 'Beranda', path: '/kader', icon: LayoutDashboard, roles: ['kader'] },
   { label: 'Tambah Anggota', path: '/members/new', icon: Users, roles: ['kader'] },
+  { label: 'Scan KTP', path: '/verification?redirect=/members/new', icon: ScanLine, roles: ['kader'] },
   { label: 'Anggota Saya', path: '/members', icon: Users, roles: ['kader'] },
   { label: 'Aktivitas', path: '/activities', icon: Activity, roles: ['kader'] },
   { label: 'Pelatihan', path: '/quiz', icon: HelpCircle, roles: ['kader'] },

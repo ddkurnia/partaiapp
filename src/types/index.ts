@@ -142,6 +142,45 @@ export interface TrainingRecord {
   completedAt: number;
 }
 
+export interface KTPData {
+  nik: string;
+  name: string;
+  birthPlace: string;
+  birthDate: string;
+  gender: 'L' | 'P' | '';
+  address: string;
+  rt: string;
+  rw: string;
+  kelurahan: string;
+  kecamatan: string;
+  agama: string;
+  statusPerkawinan: string;
+  pekerjaan: string;
+  kewarganegaraan: string;
+}
+
+export interface OCRResult {
+  success: boolean;
+  rawText: string;
+  confidence: number;
+  ktpData: Partial<KTPData>;
+  processedAt: number;
+  processingTime: number;
+}
+
+export type DocumentScanStatus = 'scanning' | 'success' | 'partial' | 'failed';
+
+export interface DocumentScan {
+  scanId: string;
+  userId: string;
+  memberId?: string;
+  type: 'ktp' | 'kk' | 'other';
+  status: DocumentScanStatus;
+  ocrResult: OCRResult;
+  imageUrl?: string;
+  createdAt: number;
+}
+
 export interface KaderProfile extends UserProfile {
   districtName?: string;
   villageName?: string;

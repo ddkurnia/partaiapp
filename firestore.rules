@@ -140,6 +140,17 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
+    // Document scans (OCR)
+    match /document_scans/{scanId} {
+      allow read: if isAuthenticated() && (
+        resource.data.userId == request.auth.uid ||
+        getRole() == 'super_admin' ||
+        getRole() == 'admin_kabupaten'
+      );
+      allow create: if isAuthenticated();
+      allow update, delete: if false;
+    }
+
     // Rewards
     match /rewards/{rewardId} {
       allow read: if isAuthenticated();
