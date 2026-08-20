@@ -3,8 +3,7 @@ node_modules/
 .pnp
 .pnp.js
 
-# Build
-/dist
+# Build (deployed via GitHub Pages legacy from main branch)
 /dist-ssr
 *.local
 
