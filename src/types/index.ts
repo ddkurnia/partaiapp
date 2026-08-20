@@ -191,6 +191,85 @@ export interface KaderProfile extends UserProfile {
   trainingHistory?: TrainingRecord[];
 }
 
+// ---- Quiz ----
+
+export interface QuizQuestion {
+  questionId: string;
+  question: string;
+  options: string[];
+  correctAnswer: number; // index of correct option
+  explanation?: string;
+}
+
+export interface Quiz {
+  quizId: string;
+  title: string;
+  description: string;
+  category: string;
+  questions: QuizQuestion[];
+  xpReward: number;
+  timeLimitSeconds: number;
+  passingScore: number; // percentage 0-100
+  attemptsAllowed: number;
+  active: boolean;
+  createdAt: number;
+  updatedAt: number;
+}
+
+export interface QuizResult {
+  resultId: string;
+  quizId: string;
+  userId: string;
+  score: number;
+  maxScore: number;
+  percentage: number;
+  passed: boolean;
+  xpEarned: number;
+  answers: number[]; // selected option index per question
+  startedAt: number;
+  completedAt: number;
+}
+
+// ---- Rewards ----
+
+export interface Reward {
+  rewardId: string;
+  title: string;
+  description: string;
+  imageUrl?: string;
+  xpCost: number;
+  stock: number;
+  category: string;
+  active: boolean;
+  createdAt: number;
+  updatedAt: number;
+}
+
+export interface RewardRedemption {
+  redemptionId: string;
+  rewardId: string;
+  userId: string;
+  rewardTitle: string;
+  xpCost: number;
+  status: 'pending' | 'approved' | 'rejected' | 'fulfilled';
+  requestedAt: number;
+  processedAt?: number;
+  processedBy?: string;
+  note?: string;
+}
+
+// ---- Leaderboard ----
+
+export interface LeaderboardEntry {
+  uid: string;
+  displayName: string;
+  xp: number;
+  level: number;
+  memberCount: number;
+  districtName?: string;
+  rank: number;
+}
+
 // ---- Google Sheets Integration ----
 
 export interface SheetConfig {
@@ -226,5 +305,19 @@ export interface SyncRecord {
 
 export interface SheetRow {
   [key: string]: string;
+}
+
+// ---- Badge Definitions ----
+
+export interface BadgeDefinition {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+  color: string;
+  condition: string;
+  xpThreshold?: number;
+  memberCountThreshold?: number;
+  quizCountThreshold?: number;
 }
 

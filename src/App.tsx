@@ -19,6 +19,12 @@ import StatisticsPage from '@/pages/statistics/StatisticsPage';
 import MapPage from '@/pages/map/MapPage';
 import ScanPage from '@/pages/verification/ScanPage';
 import SheetsPage from '@/pages/integration/SheetsPage';
+import QuizPage from '@/pages/quiz/QuizPage';
+import LeaderboardPage from '@/pages/leaderboard/LeaderboardPage';
+import RewardsPage from '@/pages/rewards/RewardsPage';
+import NotificationsPage from '@/pages/notifications/NotificationsPage';
+import SettingsPage from '@/pages/settings/SettingsPage';
+import KaderDashboardPage from '@/pages/kader/KaderDashboardPage';
 
 export default function App() {
   return (
@@ -66,14 +72,14 @@ export default function App() {
             <Route path="statistics" element={<StatisticsPage />} />
             <Route path="activities" element={<ActivitiesPage />} />
             <Route path="verification" element={<ScanPage />} />
-            <Route path="quiz" element={<PlaceholderPage title="Quiz" />} />
-            <Route path="leaderboard" element={<PlaceholderPage title="Leaderboard" />} />
-            <Route path="rewards" element={<PlaceholderPage title="Reward" />} />
-            <Route path="notifications" element={<PlaceholderPage title="Notifikasi" />} />
+            <Route path="quiz" element={<QuizPage />} />
+            <Route path="leaderboard" element={<LeaderboardPage />} />
+            <Route path="rewards" element={<RewardsPage />} />
+            <Route path="notifications" element={<NotificationsPage />} />
             <Route path="audit" element={<AuditPage />} />
             <Route path="sheets" element={<SheetsPage />} />
-            <Route path="settings" element={<PlaceholderPage title="Pengaturan" />} />
-            <Route path="kader" element={<PlaceholderPage title="Beranda Kader" />} />
+            <Route path="settings" element={<SettingsPage />} />
+            <Route path="kader" element={<KaderDashboardPage />} />
           </Route>
 
           {/* Catch-all */}
@@ -84,16 +90,4 @@ export default function App() {
   );
 }
 
-function PlaceholderPage({ title }: { title: string }) {
-  return (
-    <div className="flex items-center justify-center min-h-[60vh]">
-      <div className="text-center">
-        <div className="w-16 h-16 rounded-2xl bg-muted flex items-center justify-center mx-auto mb-4">
-          <span className="text-2xl">🚧</span>
-        </div>
-        <h2 className="text-lg font-semibold text-primary">{title}</h2>
-        <p className="text-sm text-muted-foreground mt-1">Modul ini akan tersedia di milestone berikutnya.</p>
-      </div>
-    </div>
-  );
-}
+
