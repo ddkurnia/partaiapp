@@ -190,3 +190,41 @@ export interface KaderProfile extends UserProfile {
   targets?: KaderTarget[];
   trainingHistory?: TrainingRecord[];
 }
+
+// ---- Google Sheets Integration ----
+
+export interface SheetConfig {
+  spreadsheetId: string;
+  sheetName: string;
+  columns: SheetColumnMapping[];
+  lastSyncAt?: number;
+}
+
+export interface SheetColumnMapping {
+  sheetHeader: string; // Header text in Google Sheet (e.g. "Nama Lengkap")
+  memberField: string;  // Field name in Member type (e.g. "name")
+}
+
+export type SyncDirection = 'export' | 'import';
+export type SyncStatus = 'pending' | 'running' | 'success' | 'error';
+
+export interface SyncRecord {
+  syncId: string;
+  userId: string;
+  direction: SyncDirection;
+  status: SyncStatus;
+  spreadsheetId: string;
+  sheetName: string;
+  totalRows: number;
+  processedRows: number;
+  errorRows: number;
+  errorMessage?: string;
+  startedAt: number;
+  completedAt?: number;
+  duration?: number;
+}
+
+export interface SheetRow {
+  [key: string]: string;
+}
+

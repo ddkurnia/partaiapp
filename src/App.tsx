@@ -18,6 +18,7 @@ import AuditPage from '@/pages/audit/AuditPage';
 import StatisticsPage from '@/pages/statistics/StatisticsPage';
 import MapPage from '@/pages/map/MapPage';
 import ScanPage from '@/pages/verification/ScanPage';
+import SheetsPage from '@/pages/integration/SheetsPage';
 
 export default function App() {
   return (
@@ -70,6 +71,7 @@ export default function App() {
             <Route path="rewards" element={<PlaceholderPage title="Reward" />} />
             <Route path="notifications" element={<PlaceholderPage title="Notifikasi" />} />
             <Route path="audit" element={<AuditPage />} />
+            <Route path="sheets" element={<SheetsPage />} />
             <Route path="settings" element={<PlaceholderPage title="Pengaturan" />} />
             <Route path="kader" element={<PlaceholderPage title="Beranda Kader" />} />
           </Route>

@@ -13,6 +13,7 @@ import {
   Gift,
   ClipboardCheck,
   ScanLine,
+  Table2,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -41,6 +42,7 @@ export const MORE_NAV: NavItem[] = [
   { label: 'Reward', path: '/rewards', icon: Gift, roles: ['kader', 'admin_desa', 'admin_kecamatan', 'admin_kabupaten', 'super_admin'] },
   { label: 'Notifikasi', path: '/notifications', icon: Bell, roles: ['super_admin', 'admin_kabupaten', 'admin_kecamatan', 'admin_desa', 'kader', 'viewer'] },
   { label: 'Audit Log', path: '/audit', icon: Shield, roles: ['super_admin', 'admin_kabupaten'] },
+  { label: 'Sheets', path: '/sheets', icon: Table2, roles: ['super_admin', 'admin_kabupaten'] },
   { label: 'Pengaturan', path: '/settings', icon: Settings, roles: ['super_admin', 'admin_kabupaten'] },
 ];
 
